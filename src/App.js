@@ -3,7 +3,8 @@ import StoreContextProvider from './context/StoreContext';
 import Recorder from './components/Recorder';
 import BottomBar from './components/BottomBar';
 import VerseGrid from './components/VerseGrid';
-// import ReactMic from './components/RecMic';
+import Player from './components/AudioPlayer';
+// import ExportWebm from './core/ExportWebm';
 
 const App = () => {
     return (
@@ -12,6 +13,7 @@ const App = () => {
                 <Recorder />
                 <BottomBar />
                 <VerseGrid />
+                {/* <Player /> */}
             </StoreContextProvider>
         </div>
     );

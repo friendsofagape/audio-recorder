@@ -8,7 +8,8 @@ import Mic from '@material-ui/icons/Mic';
 import StopIcon from '@material-ui/icons/Stop';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
-import DeleteIcon from '@material-ui/icons/Delete';
+import SaveIcon from '@material-ui/icons/Save';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import { StoreContext } from "../../context/StoreContext";
 import Player from "../AudioPlayer";
 const path = ``
@@ -54,15 +55,28 @@ const useStyles = makeStyles(theme => ({
         right: 0,
         margin: theme.spacing(2),
         marginLeft: 10
+    },
+    player: {
+        display: "block",
+        marginLeft: 1200,
+        width: 300,
+        color: "blue"
     }
 }));
 
 function BottomBar() {
     const classes = useStyles();
-    const { isOpen, record } = useContext(StoreContext)
+    const { isOpen, record, blobURL, onselect } = useContext(StoreContext)
     const { selectNext } = useContext(StoreContext)
     const { selectPrev } = useContext(StoreContext)
-    const { startRecording, stopRecording } = useContext(StoreContext)
+    const { startRecording, stopRecording, saveURL } = useContext(StoreContext)
+
+    useEffect(() => {
+        var timerID = setInterval(() => stopRecording(), 60000);
+        return function cleanup() {
+            clearInterval(timerID);
+        };
+    });
 
     return (
         <div>
@@ -84,16 +98,24 @@ function BottomBar() {
                                 <Fab color="primary" aria-label="edit" className={classes.fab} onClick={selectNext}>
                                     <SkipNextIcon />
                                 </Fab>
-                                <Fab aria-label="delete" className={classes.fab}>
-                                    <DeleteIcon />
+                                <Fab aria-label="delete" className={classes.fab} onClick={saveURL}>
+                                    <SaveIcon />
                                 </Fab>
+                                <a className="download" href={blobURL} download="verse.webm">
+                                    <Fab aria-label="download" className={classes.fab}>
+                                        <GetAppIcon />
+                                    </Fab>
+                                </a>
+                                <span className={classes.player}>
+                                    <Player />
+                                </span>
                             </Toolbar>
-                            <Player />
                         </AppBar>
                     </Slide>
                 </React.Fragment>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }
 export default BottomBar;

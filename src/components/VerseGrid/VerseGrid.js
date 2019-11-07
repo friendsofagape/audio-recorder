@@ -58,10 +58,7 @@ export default function CheckboxList() {
                         selected={selected === index + 1}
                         onClick={handleToggle(value.id)}
                     >
-                        {((recVerse[index] === value.id) || (recVerse[index] === onselect)) ? 
-                        console.log("true", bible.id) : 
-                        console.log("false", recVerse[index], value.id)}
-                        {isOpen && (recVerse[index] === onselect) ?
+                        {(isOpen && bible[index].id === (recVerse[index])) ?
                             <Grow
                                 in={isOpen}
                                 style={{ transformOrigin: '0 0 0' }}

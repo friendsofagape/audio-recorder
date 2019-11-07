@@ -35,7 +35,6 @@ export default function Recorder() {
     const { record } = useContext(StoreContext)
 
     function onStop(recordedBlob) {
-        console.log('recordedBlob is: ', recordedBlob);
         saveRecord(recordedBlob)
     }
 

@@ -1,5 +1,8 @@
 import React, { createContext, Component } from 'react';
-import * as sampleBible from '../components/VerseGrid/verse'
+import * as sampleBible from '../components/VerseGrid/verse';
+import { default as localforage } from 'localforage';
+import * as recSave from '../core/savetoIndex';
+import * as downloadURL from '../core/downloadWebm'
 
 export const StoreContext = createContext();
 
@@ -11,7 +14,8 @@ class StoreContextProvider extends Component {
         record: false,
         recordedFiles: {},
         recVerse: [],
-        isWarning: false
+        isWarning: false,
+        blobURL: ""
     }
     toggleOpen = () => {
         this.setState({ isOpen: !this.state.isOpen })
@@ -36,11 +40,32 @@ class StoreContextProvider extends Component {
     stopRecording = () => {
         this.setState({ record: false })
     }
-    saveRecord = (value, event) => {
+    saveURL = () => {
+        let newURL;
+        localforage.getItem(`${this.state.onselect}`).then(value => {
+            // This code runs once the value has been loaded from the offline store.
+            console.log("sdsdsdsd", value.blobURL)
+            newURL = value.blobURL
+            // console.log(value1.id)
+            this.setState({
+                blobURL: newURL
+            })
+            console.log("inside webm", newURL)
+        }).catch(err => {
+            // This code runs if there were any errors
+            console.log(err);
+        });
+        console.log(this.state.blobURL)
+
+    }
+    saveRecord = async (value, event) => {
+        let save;
         value["verse"] = this.state.onselect;
         if (this.state.isWarning === false)
             this.state.recVerse.push(this.state.onselect);
         this.setState({ recordedFiles: value })
+        save = await recSave.default(this.state.bible, this.state.recordedFiles, 1, this.state.onselect)
+        // console.log("saved", save)
     }
     render() {
         return (
@@ -54,6 +79,7 @@ class StoreContextProvider extends Component {
                     startRecording: this.startRecording,
                     stopRecording: this.stopRecording,
                     saveRecord: this.saveRecord,
+                    saveURL: this.saveURL
                 }} >
                 {this.props.children}
             </StoreContext.Provider>

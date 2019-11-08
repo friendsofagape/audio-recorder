@@ -19,15 +19,18 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Player = () => {
-    const { isOpen, record, blobURL, onselect } = useContext(StoreContext)
+    const { isOpen, record, blob, onselect } = useContext(StoreContext)
     return (
-
-        <div className={classes.root} >
-            <AudioPlayer
-                className={classes.formControl}
-                src={blobURL}
-                onPlay={e => console.log("onPlay")}
-            />
+        <div>
+            {(blob.verse === onselect) && (
+                <div className={classes.root} >
+                    <AudioPlayer
+                        className={classes.formControl}
+                        src={blob.blobURL}
+                        onPlay={e => console.log("onPlay")}
+                    />
+                </div>
+            )}
         </div>
     );
 }

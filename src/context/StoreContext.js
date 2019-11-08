@@ -15,7 +15,7 @@ class StoreContextProvider extends Component {
         recordedFiles: {},
         recVerse: [],
         isWarning: false,
-        blobURL: ""
+        blob: ""
     }
     toggleOpen = () => {
         this.setState({ isOpen: !this.state.isOpen })
@@ -40,24 +40,21 @@ class StoreContextProvider extends Component {
     stopRecording = () => {
         this.setState({ record: false })
     }
-    saveURL = () => {
+    getDB = () => {
         let newURL;
         localforage.getItem(`${this.state.onselect}`).then(value => {
             // This code runs once the value has been loaded from the offline store.
-            console.log("sdsdsdsd", value.blobURL)
-            newURL = value.blobURL
+            console.log("given", value)
+            newURL = value
             // console.log(value1.id)
             this.setState({
-                blobURL: newURL
+                blob: newURL
             })
-            console.log("inside webm", newURL)
         }).catch(err => {
-            // This code runs if there were any errors
             console.log(err);
         });
-        console.log(this.state.blobURL)
-
     }
+
     saveRecord = async (value, event) => {
         let save;
         value["verse"] = this.state.onselect;
@@ -65,7 +62,8 @@ class StoreContextProvider extends Component {
             this.state.recVerse.push(this.state.onselect);
         this.setState({ recordedFiles: value })
         save = await recSave.default(this.state.bible, this.state.recordedFiles, 1, this.state.onselect)
-        // console.log("saved", save)
+        console.log("saved", save)
+        this.getDB()
     }
     render() {
         return (
@@ -79,7 +77,7 @@ class StoreContextProvider extends Component {
                     startRecording: this.startRecording,
                     stopRecording: this.stopRecording,
                     saveRecord: this.saveRecord,
-                    saveURL: this.saveURL
+                    getDB: this.getDB
                 }} >
                 {this.props.children}
             </StoreContext.Provider>

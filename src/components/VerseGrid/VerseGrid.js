@@ -25,7 +25,6 @@ export default function CheckboxList() {
     const { isOpen, recVerse, bible } = useContext(StoreContext);
     const { resetVal } = useContext(StoreContext);
     const [selected, setSelected] = useState(onselect);
-    const [showPlay, setShowplay] = useState(false)
 
     useEffect(() => {
         setSelected(onselect)
@@ -58,6 +57,7 @@ export default function CheckboxList() {
                         selected={selected === index + 1}
                         onClick={handleToggle(value.id)}
                     >
+                        <ListItemText id={labelId} primary={`${value.id} ${value.verse}`} />
                         {(isOpen && bible[index].id === (recVerse[index])) ?
                             <Grow
                                 in={isOpen}
@@ -72,7 +72,6 @@ export default function CheckboxList() {
                                 </ListItemIcon>
                             </Grow>
                             : <span style={{ marginRight: "56px" }} ></span>}
-                        <ListItemText id={labelId} primary={`${value.id} ${value.verse}`} />
                     </ListItem>
                 );
             })}

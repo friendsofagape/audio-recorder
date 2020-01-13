@@ -67,12 +67,20 @@ const useStyles = makeStyles(theme => ({
 
 function BottomBar() {
     const classes = useStyles();
+    const [show, setShow] = useState(false);
     const { isOpen, record, blob, onselect } = useContext(StoreContext)
     const { selectNext } = useContext(StoreContext)
     const { selectPrev } = useContext(StoreContext)
-    const { startRecording, stopRecording, getDB } = useContext(StoreContext)
+    const { startRecording, stopRecording, getDB, recVerse } = useContext(StoreContext)
 
     useEffect(() => {
+         if(recVerse.find((item) => item === onselect)) { 
+             setShow(true);
+         }
+         else {
+            setShow(false);
+         }
+        console.log('onselect', onselect,'show',show)
         var timerID = setInterval(() => stopRecording(), 60000);
         return function cleanup() {
             clearInterval(timerID);
@@ -99,7 +107,9 @@ function BottomBar() {
                                 <Fab color="primary" aria-label="edit" className={classes.fab} onClick={selectNext}>
                                     <SkipNextIcon />
                                 </Fab>
-                                <a className="download" href={blob.blobURL} download="verse.webm">
+                                 { show && (
+                                    <>
+                                    <a className="download" href={blob.blobURL} download="verse.webm">
                                     <Fab aria-label="download" className={classes.fab}>
                                         <GetAppIcon />
                                     </Fab>
@@ -110,6 +120,8 @@ function BottomBar() {
                                 <span className={classes.player}>
                                     <Player />
                                 </span>
+                                </>
+                                )}
                             </Toolbar>
                         </AppBar>
                     </Slide>

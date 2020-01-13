@@ -60,3 +60,6 @@ coverage
 
 /.idea
 db/
+
+# Local Netlify folder
+.netlify

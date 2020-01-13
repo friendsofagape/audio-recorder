@@ -1,4 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Deployed developing Component on https://verserecorder.netlify.com/
 
 ## Available Scripts
 

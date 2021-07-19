@@ -10,18 +10,6 @@ let sections = [
 		content: 'README.md',
 	},
 	{
-		name: 'CustomSave',
-		components: () => {
-			const componentNames = [
-				'CustomSave',
-			];
-			return componentNames.map(componentName => {
-				const filename = upperFirst(camelCase(componentName));
-				return path.resolve(__dirname, `src/components/${componentName}`, `${filename}.js`)
-			});
-		}
-	},
-	{
 		name: 'TailwindModal',
 		components: () => {
 			const componentNames = [

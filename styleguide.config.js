@@ -21,6 +21,45 @@ let sections = [
 			});
 		}
 	},
+	{
+		name: 'Basic Recorder',
+		content: 'src/components/Recorder/_readme.md',
+		components: () => {
+			const componentNames = [
+				'Recorder','Player'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/Recorder`, `${filename}.js`)
+			});
+		}
+	},
+	{
+		name: 'Waveform Editor',
+		content: 'src/components/AudioEditor/_readme.md',
+		components: () => {
+			const componentNames = [
+				'AudioEditor','AudioToolBar', 'WavePlayer'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/AudioEditor`, `${filename}.js`)
+			});
+		}
+	},
+	{
+		name: 'Buffer Methods',
+		content: 'src/components/BufferOptions/_readme.md',
+		components: () => {
+			const componentNames = [
+				'BufferOptions'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/BufferOptions`, `${filename}.js`)
+			});
+		}
+	},
 	// {
 	// 	name: 'Core',
 	// 	content: 'src/core/README.md',

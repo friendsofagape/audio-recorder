@@ -20,16 +20,7 @@ const tracks = [
     ],
   },
   {
-    src: "../../../public/media/106.Metro.mp3",
-    zoomLevels: [50, 100, 200, 500, 1000, 3000, 5000],
-    hidden: true,
-    states: {
-      shift: false,
-    },
-    name: "metronome",
-  },
-  {
-    src: "../../../public/media/106.Brushes.mp3",
+    src: "../../../public/media/metronome.mp3",
     zoomLevels: [50, 100, 200, 500, 1000, 3000, 5000],
     hidden: true,
     states: {

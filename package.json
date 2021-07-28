@@ -57,6 +57,7 @@
 		"react-styleguidist": "^11.1.7",
 		"tailwindcss": "^2.2.4",
 		"waveform-playlist": "^4.0.1",
+		"wavesurfer.js": "5.1.0",
 		"yarn": "^1.22.10"
 	},
 	"devDependencies": {

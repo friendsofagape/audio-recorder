@@ -60,6 +60,19 @@ let sections = [
 			});
 		}
 	},
+	{
+		name: 'Waveform Player',
+		content: 'src/components/AudioPlayer/_readme.md',
+		components: () => {
+			const componentNames = [
+				'AudioPlayer', 'WaveformPlayer'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/AudioPlayer`, `${filename}.js`)
+			});
+		}
+	},
 	// {
 	// 	name: 'Core',
 	// 	content: 'src/core/README.md',

@@ -49,7 +49,7 @@ function WavePlayer({
           fadeColor: "black",
         },
         controls: {
-          show: false, //whether or not to include the track controls
+          show: true, //whether or not to include the track controls
         },
       })
 

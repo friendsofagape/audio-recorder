@@ -24,9 +24,8 @@
 		"electron": "wait-on tcp:6060 && electron .",
 		"prebuild": "npm run build:tailwind",
 		"prepublishOnly": "rm -fr ./dist & babel ./src --out-dir ./dist -s inline",
-		"predeploy": "yarn styleguide:build",
-		"deploy": "gh-pages -d styleguide",
-		"postpublish": "yarn deploy"
+		"predeploy": "npm run build:tailwind",
+		"deploy": "styleguidist build"
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^1.2.35",

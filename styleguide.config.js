@@ -73,6 +73,19 @@ let sections = [
 			});
 		}
 	},
+	{
+		name: 'Buffer Manupulation',
+		content: 'src/components/BufferManupulation/_readme.md',
+		components: () => {
+			const componentNames = [
+				'Trimmer',
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/BufferManupulation`, `${filename}.js`)
+			});
+		}
+	},
 	// {
 	// 	name: 'Core',
 	// 	content: 'src/core/README.md',

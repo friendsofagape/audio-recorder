@@ -84,16 +84,15 @@ const CompoentTestCode = () => {
 						onChange={(e) => handleEndTime(e)}
 					/>
 				</span>
-				<span class='custom-number-input ml-2 h-10 '>
+				<div class='custom-number-input ml-2 h-10 '>
 					<label
 						for='custom-input-number'
 						class='text-gray-700 text-sm font-semibold'>
-						End Time
 						<span class='text-xs ml-2 md:text-base h-10 text-center'>
 							{remainingTime}
 						</span>
 					</label>
-				</span>
+				</div>
 			</div>
 			<span class='inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-indigo-100 bg-indigo-700 rounded'>
 				{selectedTrack.title}

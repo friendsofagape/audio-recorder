@@ -25,42 +25,45 @@ function WavePlayer({
     const init = async () => {
       let playlist = WaveformPlaylist({
         samplesPerPixel: 3000,
-        zoomLevels: [12, 25, 50, 100, 200, 500, 1000, 3000, 5000],
         mono: true,
-        waveHeight: 100,
+        waveHeight: 70,
         container: waveFormNode,
-        states: {
-          cursor: false,
-          fadein: true,
-          fadeout: true,
-          select: true,
-          shift: true,
-        },
-        isContinuousPlay: true,
-        isAutomaticScroll: true,
-        showTimeSignature: true,
-        timeSignature,
-        name,
-        selections,
-        waveOutlineColor: "#E0EFF1",
+        state: "cursor",
         colors: {
           waveOutlineColor: "#E0EFF1",
           timeColor: "grey",
-          fadeColor: "black",
+          fadeColor: "black"
         },
         controls: {
-          show: true, //whether or not to include the track controls
+          show: false,
+          width: 150,
         },
+        zoomLevels: [500, 1000, 3000, 5000]
       })
 
-      await loadLocalStorageAudioTracks(playlist, tracks)
-      const ee = playlist.getEventEmitter()
-      setEmitter(ee)
-      
-      const keyShortCutGenerator = keyboardShortCut(ee)
-      shortCuts.forEach(({ key, command, opts = [] }) => {
-        keyShortCutGenerator(key, command, ...opts)
-      })
+  playlist.load([
+    {
+      src: "../../../public/media/everbe.mp3",
+      name: "Vocals",
+      gain: 0.5
+    },
+    {
+      src: "../../../public/media/Guitar30.mp3",
+      name: "Guitar",
+      start: 23.5,
+      fadeOut: {
+        shape: "linear",
+        duration: 0.5
+      },
+      cuein: 15
+    }
+  ])
+  .then(function() {
+    // can do stuff with the playlist.
+    const ee = playlist.getEventEmitter()
+    setEmitter(ee)
+  });
+
 
     }
     init()

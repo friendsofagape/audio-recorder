@@ -12,6 +12,8 @@ const tracks = [
 
 function AudioPlayer() {
 	const [selectedTrack, setSelectedTrack] = useState(tracks[0]);
+	const [totalTime, setTotalTime] = useState('00:00:00');
+	const [remainingTime, setRemainingTime] = useState('00:00:00');
 
 	const handleReadFile = (selectorFiles) => {
 		const file = selectorFiles.item(0);
@@ -47,7 +49,37 @@ function AudioPlayer() {
 			<span class='inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-indigo-100 bg-indigo-700 rounded'>
 				{selectedTrack.title}
 			</span>
-			<WaveformPlayer src={selectedTrack.file} />
+			<WaveformPlayer
+				totalDuration={setTotalTime}
+				setRemainingTime={setRemainingTime}
+				src={selectedTrack.file}
+			/>
+			<span class='custom-number-input ml-2 h-10 '>
+				<label
+					for='custom-input-number'
+					class='text-gray-700 text-sm font-semibold'>
+					Remaining
+					<input
+						class='text-xs ml-2 md:text-base border h-10 border-gray-400 rounded-lg focus:outline-none text-center'
+						name='custom-input-number'
+						readOnly
+						value={remainingTime}
+					/>
+				</label>
+			</span>
+			<span class='custom-number-input ml-2 h-10 '>
+				<label
+					for='custom-input-number'
+					class='text-gray-700 text-sm font-semibold'>
+					Total Duration
+				</label>
+				<input
+					class='text-xs ml-2 md:text-base border h-10 border-gray-400 rounded-lg focus:outline-none text-center'
+					readOnly
+					name='custom-input-number'
+					value={totalTime}
+				/>
+			</span>
 		</div>
 	);
 }

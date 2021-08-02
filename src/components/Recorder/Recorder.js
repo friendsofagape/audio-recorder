@@ -1,13 +1,40 @@
 import { useReactMediaRecorder } from "react-media-recorder";
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import React, { Fragment, useState } from 'react';
 import { RecorderContext } from "../context/RecorderContext";
-import ReactAudioPlayer from 'react-audio-player';
+import WaveSurfer from "wavesurfer.js";
+import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone.js';
+
 import '../../tailwind.output.css';
 import Player from "./Player";
+import WaveformPlayer from "../AudioPlayer/WaveformPlayer";
+
+const microphone = MicrophonePlugin.create()
+
+const formWaveSurferOptions = (ref) => ({
+  container: ref,
+  waveColor: "#DC143C",
+  progressColor: "green",
+  cursorColor: "red",
+  interact: false,
+  responsive: 1000,
+  cursorWidth: 1,
+  height: 200,
+  // If true, normalize by the maximum peak instead of 1.0.
+  // Use the PeakCache to improve rendering speed of large waveforms.
+  plugins:[
+    microphone
+  ],
+});
 
 const Recorder = () => {
     const [url, setUrl] = useState('')
+    const waveformRef = useRef(null);
+    const wavesurfer = useRef(null);
+    const [startTime, setStartTime] = useState("00:00:00")
+    const [endTime, setEndTime] = useState("00:00:00")
+    const [totalTime, setTotalTime] = useState("00:00:00")
+    const [remainingTime, setRemainingTime] = useState("00:00:00")
     const [recordingStatus, setRecordingStatus] = useState('idle')
     const [audioFormat, setAudioFormat] =  useState("audio/mp3")
     const {
@@ -43,25 +70,85 @@ const Recorder = () => {
         blobPropertyBag : { type: audioFormat }
     });
 
+    useEffect(() => {
+      const options = formWaveSurferOptions(waveformRef.current);
+      wavesurfer.current = WaveSurfer.create(options);
+      wavesurfer.current.microphone.on('deviceReady', function(stream) {
+        console.log('Device ready!', stream);
+      });
+      wavesurfer.current.microphone.on('deviceError', function(code) {
+        console.warn('Device error: ' + code);
+      });
+      return () => wavesurfer.current.microphone.destroy();
+    },[])
+
     const start = () => {
         clearBlobUrl()
         startRecording()
         setRecordingStatus("start")
+        wavesurfer.current.microphone.start();
     }
 
     const pause = () => {
         pauseRecording()
         setRecordingStatus('pause')
+        wavesurfer.current.microphone.pause();
     }
 
     const resume = () => {
         resumeRecording()
         setRecordingStatus('resume')
+        wavesurfer.current.microphone.play();
+    }
+
+    const stop = () => {
+      stopRecording()
+      setRecordingStatus('stop')
+      wavesurfer.current.microphone.stop();
     }
 
     return (
     <div className="App ">
-    <Player srcUrl={url}/>
+    {recordingStatus!== 'stop' && (
+      <div id="waveform" ref={waveformRef} />
+    )}
+    {url && (
+      <>
+      <WaveformPlayer 
+      src={url} 
+      setStartTime={setStartTime}
+			setEndTime={setEndTime}
+			setRemainingTime={setRemainingTime}
+			totalDuration={setTotalTime}
+      />
+      <span class='custom-number-input ml-2 h-10 '>
+					<label
+						for='custom-input-number'
+						class='text-gray-700 text-sm font-semibold'>
+						Remaining
+            <input
+						class='text-xs ml-2 md:text-base border h-10 border-gray-400 rounded-lg focus:outline-none text-center'
+						name='custom-input-number'
+						value={remainingTime}
+					/>
+					</label>
+				</span>
+				<span class='custom-number-input ml-2 h-10 '>
+					<label
+						for='custom-input-number'
+						class='text-gray-700 text-sm font-semibold'>
+						Total Duration
+					</label>
+					<input
+						class='text-xs ml-2 md:text-base border h-10 border-gray-400 rounded-lg focus:outline-none text-center'
+						name='custom-input-number'
+						value={totalTime}
+					/>
+				</span>
+				
+        </>
+    )}
+    {/* <Player srcUrl={url}/> */}
     <div class=" py-5">
     <nav class="items-center justify-between px-2 py-3 bg-gray-100 rounded">
       <div class="container px-2  mx-auto flex flex-wrap items-center justify-between">
@@ -144,7 +231,7 @@ const Recorder = () => {
                     uppercase px-2 py-2 rounded-full 
                     outline-none focus:outline-none 
                     ease-linear transition-all duration-150" type="button"
-                    onClick={stopRecording}
+                    onClick={stop}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clip-rule="evenodd" />

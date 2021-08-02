@@ -35,19 +35,6 @@ let sections = [
 		}
 	},
 	{
-		name: 'Waveform Editor',
-		content: 'src/components/AudioEditor/_readme.md',
-		components: () => {
-			const componentNames = [
-				'AudioEditor','AudioToolBar', 'WavePlayer'
-			];
-			return componentNames.map(componentName => {
-				const filename = upperFirst(camelCase(componentName));
-				return path.resolve(__dirname, `src/components/AudioEditor`, `${filename}.js`)
-			});
-		}
-	},
-	{
 		name: 'Buffer Methods',
 		content: 'src/components/BufferOptions/_readme.md',
 		components: () => {
@@ -83,6 +70,19 @@ let sections = [
 			return componentNames.map(componentName => {
 				const filename = upperFirst(camelCase(componentName));
 				return path.resolve(__dirname, `src/components/BufferManupulation`, `${filename}.js`)
+			});
+		}
+	},
+	{
+		name: 'Waveform Editor',
+		content: 'src/components/WavePlaylist/_readme.md',
+		components: () => {
+			const componentNames = [
+				'WaveformPlaylist'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/WavePlaylist`, `${filename}.js`)
 			});
 		}
 	},
@@ -132,6 +132,17 @@ module.exports = {
 					test: /\.css$/,
 					loader: 'style-loader!css-loader',
 				},
+				{
+					test: /\.s[ac]ss$/i,
+					use: [
+					  // Creates `style` nodes from JS strings
+					  "style-loader",
+					  // Translates CSS into CommonJS
+					  "css-loader",
+					  // Compiles Sass to CSS
+					  "sass-loader",
+					],
+				  },
 			],
 		},
 	},

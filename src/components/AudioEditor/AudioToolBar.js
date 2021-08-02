@@ -65,7 +65,6 @@ const AudioToolBar = ({ playoutPromises, emitter }) => {
             <Button
               title="Pause"
               onClick={() => {
-                emitter.emit("splitchannels")
                 emitter.emit("pause")
                 setIsPlaying(false)
               }}
@@ -80,7 +79,6 @@ const AudioToolBar = ({ playoutPromises, emitter }) => {
               icon={faPlay}
               onClick={() => {
                 setStateButton(STATE_CURSOR)
-                emitter.emit("mergechannels")
                 emitter.emit("play")
                 setIsPlaying(true)
               }}
@@ -90,7 +88,6 @@ const AudioToolBar = ({ playoutPromises, emitter }) => {
               icon={faStop}
               className="btn-outline-danger"
               onClick={() => {
-                emitter.emit("splitchannels")
                 emitter.emit("stop")
                 setIsPlaying(false)
               }}
@@ -123,7 +120,6 @@ const AudioToolBar = ({ playoutPromises, emitter }) => {
                 stateButton === STATE_CURSOR && "active"
               }`}
               onClick={e => {
-                emitter.emit("splitchannels")
                 emitter.emit("statechange", "cursor")
                 setStateButton(STATE_CURSOR)
               }}
@@ -135,7 +131,6 @@ const AudioToolBar = ({ playoutPromises, emitter }) => {
                 stateButton === STATE_SELECT && "active"
               }`}
               onClick={e => {
-                emitter.emit("splitchannels")
                 emitter.emit("statechange", "select")
                 setStateButton(STATE_SELECT)
               }}
@@ -147,36 +142,10 @@ const AudioToolBar = ({ playoutPromises, emitter }) => {
                 stateButton === STATE_SHIFT && " active"
               }`}
               onClick={e => {
-                emitter.emit("splitchannels")
                 emitter.emit("statechange", "shift")
                 setStateButton(STATE_SHIFT)
               }}
               icon={faArrowsAltH}
-            />
-
-            <Button
-              className={`btn-outline-dark ${
-                stateButton === STATE_RESIZE_LEFT && "active"
-              }`}
-              title="Resize audio clip from the left"
-              onClick={e => {
-                emitter.emit("splitchannels")
-                emitter.emit("statechange", "resizeleft")
-                setStateButton(STATE_RESIZE_LEFT)
-              }}
-              icon={faArrowLeft}
-            />
-            <Button
-              className={`btn-outline-dark ${
-                stateButton === STATE_RESIZE_RIGHT && "active"
-              }`}
-              title="Resize audio clip from the right"
-              onClick={e => {
-                emitter.emit("splitchannels")
-                emitter.emit("statechange", "resizeright")
-                setStateButton(STATE_RESIZE_RIGHT)
-              }}
-              icon={faArrowRight}
             />
             <Button
               title="Delete clip"

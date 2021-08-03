@@ -13,6 +13,7 @@ const Home = props => {
         <span class="mt-2 text-base leading-normal">Select audio files</span>
         <input 
         type='file' 
+        accept=".mp3,audio/*"
         class="hidden" 
         multiple 
         onChange={e => updateInputValue(e)}/>

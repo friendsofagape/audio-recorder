@@ -11,8 +11,6 @@ const AudioPlayer = props => {
     useEffect(() => {
         if(playlist && ee){
             ee.on("audiorequeststatechange", function(state, src) {
-                // Array index refers state value
-                // States = ["uninitialized", "loading", "decoding", "finished"];
                 updatesrcRenderState(state);
             });
         }
@@ -35,7 +33,10 @@ const AudioPlayer = props => {
             {renderFooter()}
             {
                 (srcRenderState !== 0 && srcRenderState !== 3) &&
-                <h3 className="text-center loader">Loading...</h3>
+                <div class="animate-spin ml-5 rounded-full h-20 w-20 border-t-2 border-b-2 border-purple-500"></div>
+            }
+            {(srcRenderState === 0 && srcRenderState === 0) &&
+                <img title="import files to activate" class="disabled opacity-30" src="public/demopic.PNG"></img>
             }
         </div>
     )

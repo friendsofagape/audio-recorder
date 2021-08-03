@@ -35,19 +35,6 @@ let sections = [
 		}
 	},
 	{
-		name: 'Buffer Methods',
-		content: 'src/components/BufferOptions/_readme.md',
-		components: () => {
-			const componentNames = [
-				'BufferOptions'
-			];
-			return componentNames.map(componentName => {
-				const filename = upperFirst(camelCase(componentName));
-				return path.resolve(__dirname, `src/components/BufferOptions`, `${filename}.js`)
-			});
-		}
-	},
-	{
 		name: 'Waveform Player',
 		content: 'src/components/AudioPlayer/_readme.md',
 		components: () => {
@@ -83,6 +70,19 @@ let sections = [
 			return componentNames.map(componentName => {
 				const filename = upperFirst(camelCase(componentName));
 				return path.resolve(__dirname, `src/components/WavePlaylist`, `${filename}.js`)
+			});
+		}
+	},
+	{
+		name: 'Buffer Methods',
+		content: 'src/components/BufferOptions/_readme.md',
+		components: () => {
+			const componentNames = [
+				'BufferOptions'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/BufferOptions`, `${filename}.js`)
 			});
 		}
 	},

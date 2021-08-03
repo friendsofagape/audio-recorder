@@ -10,7 +10,7 @@
 	},
 	"license": "MIT",
 	"engines": {
-		"node": ">=4"
+		"node": ">=14"
 	},
 	"scripts": {
 		"build": "react-scripts build",
@@ -54,7 +54,7 @@
 		"react-audio-player": "^0.17.0",
 		"react-dom": "^17.0.2",
 		"react-media-recorder": "^1.5.0",
-		"react-styleguidist": "^11.1.7",
+		"react-styleguidist": "^11.1.6",
 		"tailwindcss": "^2.2.4",
 		"waveform-playlist": "^4.0.2",
 		"wavesurfer.js": "5.1.0",

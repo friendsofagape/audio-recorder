@@ -9,9 +9,6 @@
 		"url": "https://github.com/friendsofagape/audio-recorder"
 	},
 	"license": "MIT",
-	"engines": {
-		"node": ">=14"
-	},
 	"scripts": {
 		"build": "react-scripts build",
 		"build:tailwind": "tailwind build src/tailwind.css -o src/tailwind.output.css",

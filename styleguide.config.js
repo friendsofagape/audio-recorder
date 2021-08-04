@@ -103,7 +103,24 @@ module.exports = {
 		text: 'View on GitHub'
 	},
 	styles,
-	theme,
+	theme: {
+        // color: {
+        //   link: '#51B64B',
+        //   linkHover: '#3099B9',
+        //   sidebarBackground: '#013444',
+        //   base: '#333',
+        // },
+		maxWidth: 1300,
+        color: {
+            base:"#3099B9",
+            link: 'firebrick',
+            linkHover: '#51B64B',
+            sidebarBackground: '#013444',
+          },
+        fontFamily: {
+          base: '"Open Sans", sans-serif'
+        }
+      },
 	getComponentPathLine: (componentPath) => {
 		const dirname = path.dirname(componentPath, '.js');
 		const file = dirname.split('/').slice(-1)[0];
@@ -142,7 +159,11 @@ module.exports = {
 					  // Compiles Sass to CSS
 					  "sass-loader",
 					],
-				  },
+				},
+				{
+					test: /\.(gif|svg|jpg|png)$/,
+					loader: "file-loader",
+				}
 			],
 		},
 	},

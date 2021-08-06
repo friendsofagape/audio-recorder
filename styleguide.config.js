@@ -21,6 +21,71 @@ let sections = [
 			});
 		}
 	},
+	{
+		name: 'Basic Recorder',
+		content: 'src/components/Recorder/_readme.md',
+		components: () => {
+			const componentNames = [
+				'Recorder','Player'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/Recorder`, `${filename}.js`)
+			});
+		}
+	},
+	{
+		name: 'Waveform Player',
+		content: 'src/components/AudioPlayer/_readme.md',
+		components: () => {
+			const componentNames = [
+				'AudioPlayer', 'WaveformPlayer'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/AudioPlayer`, `${filename}.js`)
+			});
+		}
+	},
+	{
+		name: 'Buffer Manupulation',
+		content: 'src/components/BufferManupulation/_readme.md',
+		components: () => {
+			const componentNames = [
+				'Trimmer',
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/BufferManupulation`, `${filename}.js`)
+			});
+		}
+	},
+	{
+		name: 'Waveform Editor',
+		content: 'src/components/WavePlaylist/_readme.md',
+		components: () => {
+			const componentNames = [
+				'WaveformPlaylist'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/WavePlaylist`, `${filename}.js`)
+			});
+		}
+	},
+	{
+		name: 'Buffer Methods',
+		content: 'src/components/BufferOptions/_readme.md',
+		components: () => {
+			const componentNames = [
+				'BufferOptions'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/BufferOptions`, `${filename}.js`)
+			});
+		}
+	},
 	// {
 	// 	name: 'Core',
 	// 	content: 'src/core/README.md',
@@ -38,7 +103,24 @@ module.exports = {
 		text: 'View on GitHub'
 	},
 	styles,
-	theme,
+	theme: {
+        // color: {
+        //   link: '#51B64B',
+        //   linkHover: '#3099B9',
+        //   sidebarBackground: '#013444',
+        //   base: '#333',
+        // },
+		maxWidth: 1300,
+        color: {
+            base:"#3099B9",
+            link: 'firebrick',
+            linkHover: '#51B64B',
+            sidebarBackground: '#013444',
+          },
+        fontFamily: {
+          base: '"Open Sans", sans-serif'
+        }
+      },
 	getComponentPathLine: (componentPath) => {
 		const dirname = path.dirname(componentPath, '.js');
 		const file = dirname.split('/').slice(-1)[0];
@@ -67,6 +149,21 @@ module.exports = {
 					test: /\.css$/,
 					loader: 'style-loader!css-loader',
 				},
+				{
+					test: /\.s[ac]ss$/i,
+					use: [
+					  // Creates `style` nodes from JS strings
+					  "style-loader",
+					  // Translates CSS into CommonJS
+					  "css-loader",
+					  // Compiles Sass to CSS
+					  "sass-loader",
+					],
+				},
+				{
+					test: /\.(gif|svg|jpg|png)$/,
+					loader: "file-loader",
+				}
 			],
 		},
 	},

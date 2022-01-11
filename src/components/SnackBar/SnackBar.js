@@ -60,28 +60,6 @@ const SnackBar = () => {
                     {snackText}
                   </p>
                 </div>
-
-                {/* <div className="relative p-5 mt-5 bg-light rounded-lg text-sm font-semibold text-gray-500">
-                  <button
-                    type="button"
-                    className="bg-black absolute top-0 right-0 h-6 w-6 rounded-full text-center text-white p-1 -mt-2 -mr-2 focus:outline-none"
-                    onClick={() => closeSnackBar(false)}
-                  >
-                    <XIcon />
-                  </button>
-                  <p>This is a Notifiction.</p>
-                </div>
-                <div className="relative p-5 mt-5 bg-validation rounded-lg text-sm font-semibold text-gray-500">
-                  <button
-                    type="button"
-                    className="bg-black absolute top-0 right-0 h-6 w-6 rounded-full text-center text-white p-1 -mt-2 -mr-2 focus:outline-none"
-                    onClick={() => closeSnackBar(false)}
-                  >
-                    <XIcon />
-                  </button>
-                  <p>This is a Notifiction.</p>
-                </div> */}
-
               </div>
 
             </Transition.Child>

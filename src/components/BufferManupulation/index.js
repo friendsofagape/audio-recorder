@@ -1,1 +1,1 @@
-export {default} from './Trimmer.js';
+export {default as Trimmer} from './Trimmer.js';

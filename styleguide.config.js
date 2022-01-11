@@ -36,14 +36,14 @@ let sections = [
 	},
 	{
 		name: 'Waveform Player',
-		content: 'src/components/AudioPlayer/_readme.md',
+		content: 'src/components/WaveformPlayer/_readme.md',
 		components: () => {
 			const componentNames = [
-				'AudioPlayer', 'WaveformPlayer'
+				'WaveformPlayer',
 			];
 			return componentNames.map(componentName => {
 				const filename = upperFirst(camelCase(componentName));
-				return path.resolve(__dirname, `src/components/AudioPlayer`, `${filename}.js`)
+				return path.resolve(__dirname, `src/components/WaveformPlayer`, `${filename}.js`)
 			});
 		}
 	},

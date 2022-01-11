@@ -7,7 +7,7 @@ import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone.js
 
 import '../../tailwind.output.css';
 import Player from "./Player";
-import WaveformPlayer from "../AudioPlayer/WaveformPlayer";
+import WaveformPlayer from "../WaveformPlayer/WaveformPlayer";
 
 const microphone = MicrophonePlugin.create()
 

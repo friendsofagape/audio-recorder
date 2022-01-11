@@ -1,5 +1,5 @@
 {
-	"name": "audio-recorder-rcl",
+	"name": "recorder-rcl",
 	"description": "A component for verse recording",
 	"version": "0.1.1",
 	"private": false,
@@ -10,7 +10,7 @@
 	},
 	"license": "MIT",
 	"scripts": {
-		"build": "react-scripts build",
+		"build": "babel ./src --out-dir ./dist --copy-files -s inline --extensions \".ts,.js\"",
 		"build:tailwind": "tailwind build src/tailwind.css -o src/tailwind.output.css",
 		"watch:tailwind": "chokidar 'src/**/*.css' 'src/**/*.scss' --ignore src/tailwind.output.css -c 'npm run build:tailwind'",
 		"start": "npm-run-all build:tailwind --parallel watch:tailwind start:electron",
@@ -20,9 +20,8 @@
 		"styleguide:build": "styleguidist build",
 		"electron": "wait-on tcp:6060 && electron .",
 		"prebuild": "npm run build:tailwind",
-		"prepublishOnly": "rm -fr ./dist & babel ./src --out-dir ./dist -s inline",
-		"predeploy": "npm run build:tailwind",
-		"deploy": "styleguidist build"
+		"predeploy": "babel ./src --out-dir ./dist --copy-files -s inline --extensions \".ts,.js\"",
+		"deploy": "git push"
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^1.2.35",
@@ -39,6 +38,7 @@
 		"alamp": "^0.1.6",
 		"chokidar-cli": "^2.1.0",
 		"crunker": "^0.4.1",
+		"core-js": "^3.8.3",
 		"electron-is-dev": "^1.2.0",
 		"file-saver": "^2.0.2",
 		"localforage": "1.9.0",
@@ -58,9 +58,10 @@
 		"yarn": "^1.22.10"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.5.5",
+		"@babel/cli": "^7.14.8",
+		"@babel/core": "^7.15.0",
 		"@babel/plugin-proposal-class-properties": "^7.5.5",
-		"@babel/preset-env": "^7.5.5",
+		"@babel/preset-env": "^7.15.0",
 		"@babel/preset-react": "^7.0.0",
 		"@tailwindcss/jit": "0.1.18",
 		"@types/react": "17.0.0",
@@ -89,8 +90,15 @@
 		"not ie <= 11",
 		"not op_mini all"
 	],
+	"keywords": [
+		"Audio Recorder",
+		"audioeditor",
+		"webapieditor",
+		"waveformeditor"
+	],
 	"main": "public/electron.js",
 	"files": [
 		"dist/*"
-	]
+	],
+	"module": "dist/index.js"
 }

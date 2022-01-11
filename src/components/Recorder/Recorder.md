@@ -6,7 +6,6 @@ import SnackBar from '../SnackBar';
 const BasicRecorder = () => {
 	return (
 		<RecorderContextProvider>
-			<SnackBar />
 			<Recorder />
 		</RecorderContextProvider>
 	);

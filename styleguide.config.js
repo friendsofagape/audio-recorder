@@ -86,6 +86,32 @@ let sections = [
 			});
 		}
 	},
+	{
+		name: 'VerseComponent',
+		content: 'src/components/VerseComponent/_readme.md',
+		components: () => {
+			const componentNames = [
+				'VerseComponent'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/VerseComponent`, `${filename}.js`)
+			});
+		}
+	},
+	{
+		name: 'CustomPlayer',
+		content: 'src/components/CustomPlayer/_readme.md',
+		components: () => {
+			const componentNames = [
+				'CustomPlayer'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/CustomPlayer`, `${filename}.js`)
+			});
+		}
+	},
 	// {
 	// 	name: 'Core',
 	// 	content: 'src/core/README.md',

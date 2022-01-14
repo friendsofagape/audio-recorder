@@ -6,7 +6,7 @@ export default function CustomPlayer() {
     <>
     <div style={{ width: '90%', height: '200px', borderRadius: '20px' }} className='bg-black text-white'>
         <div style={{ borderRadius: '20px', height: '80px', width: '80%' }} >
-            <div className="flex p-2 px-4 justify-between items-center bg-black text-white">
+            <div style={{ borderRadius: '20px'}} className="flex p-2 px-4 justify-between items-center bg-black text-white">
                 <div className="px-2 py-4 font-bold text-white text-sm tracking-wider">
                   10:30
                 </div>

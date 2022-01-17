@@ -1,7 +1,104 @@
-import React from 'react';
+import React ,  { useState }from 'react';
+import { useReactMediaRecorder } from "react-media-recorder";
+import { useCallback, useEffect, useRef } from "react";
+import { RecorderContext } from "../context/RecorderContext";
+import WaveSurfer from "wavesurfer.js";
+import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone.js';
 import { TrashIcon, MicrophoneIcon, VolumeUpIcon, PlayIcon, PauseIcon, RefreshIcon, MinusIcon, PlusIcon, CogIcon } from '@heroicons/react/outline';
 
+const microphone = MicrophonePlugin.create()
+
+const formWaveSurferOptions = (ref) => ({
+  container: ref,
+  waveColor: "#DC143C",
+  progressColor: "green",
+  cursorColor: "red",
+  interact: false,
+  responsive: 1000,
+  cursorWidth: 1,
+  height: 200,
+  // If true, normalize by the maximum peak instead of 1.0.
+  // Use the PeakCache to improve rendering speed of large waveforms.
+  plugins:[
+    microphone
+  ],
+});
+
 export default function CustomPlayer() {
+  const [url, setUrl] = useState('')
+  const waveformRef = useRef(null);
+  const wavesurfer = useRef(null);
+  const [startTime, setStartTime] = useState("00:00:00")
+  const [endTime, setEndTime] = useState("00:00:00")
+  const [totalTime, setTotalTime] = useState("00:00:00")
+  const [remainingTime, setRemainingTime] = useState("00:00:00")
+  const [recordingStatus, setRecordingStatus] = useState('idle')
+  const [audioFormat, setAudioFormat] =  useState("audio/mp3")
+
+  const playRecordingFeedback = useCallback(
+    async (blobUrl, blob) => {
+      console.log(blob, blobUrl)
+      setUrl(blobUrl)
+      setSnackBar(true)
+      setSnackText("Recording stopped!")
+      setRecordingStatus("stop")
+      const playRecordedAudio = getPlayRecord(blobUrl);
+      await playRecordedAudio();
+    },
+    []
+  );
+
+  const {
+    startRecording,
+    stopRecording,
+    pauseRecording,
+    resumeRecording,
+    clearBlobUrl,
+    error,
+    status
+    } = useReactMediaRecorder({
+        audio: {},
+        onStop: playRecordingFeedback,
+        blobPropertyBag : { type: audioFormat }
+    });
+
+  useEffect(() => {
+    const options = formWaveSurferOptions(waveformRef.current);
+    wavesurfer.current = WaveSurfer.create(options);
+    wavesurfer.current.microphone.on('deviceReady', function(stream) {
+      console.log('Device ready!', stream);
+    });
+    wavesurfer.current.microphone.on('deviceError', function(code) {
+      console.warn('Device error: ' + code);
+    });
+    return () => wavesurfer.current.microphone.destroy();
+  },[])
+
+  const start = () => {
+      clearBlobUrl()
+      startRecording()
+      setRecordingStatus("start")
+      wavesurfer.current.microphone.start();
+  }
+
+  const pause = () => {
+      pauseRecording()
+      setRecordingStatus('pause')
+      wavesurfer.current.microphone.pause();
+  }
+
+  const resume = () => {
+      resumeRecording()
+      setRecordingStatus('resume')
+      wavesurfer.current.microphone.play();
+  }
+
+  const stop = () => {
+    stopRecording()
+    setRecordingStatus('stop')
+    wavesurfer.current.microphone.stop();
+  }
+
   return (
     <>
     <div style={{ width: '90%', height: '200px', borderRadius: '20px' }} className='bg-black text-white'>
@@ -107,6 +204,11 @@ export default function CustomPlayer() {
                         <span className="flex font-bold text-dark">
                             1
                         </span>
+                        <div>
+                          {recordingStatus!== 'stop' && (
+                            <div id="waveform" ref={waveformRef} />
+                          )}
+                        </div>
                     </div>
                 </button>
                 <button type="button" className="rounded-md hover:bg-error">

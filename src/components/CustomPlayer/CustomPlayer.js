@@ -3,8 +3,10 @@ import { useReactMediaRecorder } from "react-media-recorder";
 import { useCallback, useEffect, useRef } from "react";
 import { RecorderContext } from "../context/RecorderContext";
 import WaveSurfer from "wavesurfer.js";
+import WaveformPlayer from "../WaveformPlayer/WaveformPlayer";
 import MicrophonePlugin from 'wavesurfer.js/dist/plugin/wavesurfer.microphone.js';
-import { TrashIcon, MicrophoneIcon, VolumeUpIcon, PlayIcon, PauseIcon, RefreshIcon, MinusIcon, PlusIcon, CogIcon } from '@heroicons/react/outline';
+import { TrashIcon, MicrophoneIcon, VolumeUpIcon, PlayIcon, PauseIcon, RefreshIcon, MinusIcon, PlusIcon, CogIcon, StopIcon } from '@heroicons/react/outline';
+import saveToLocalforage from '../../core/saveToLocalforage';
 
 const microphone = MicrophonePlugin.create()
 
@@ -34,16 +36,17 @@ export default function CustomPlayer() {
   const [remainingTime, setRemainingTime] = useState("00:00:00")
   const [recordingStatus, setRecordingStatus] = useState('idle')
   const [audioFormat, setAudioFormat] =  useState("audio/mp3")
+  const [selectedRevision, setSelectedRevision] = useState('A')
+  const [recordStop, setRecordStop] = useState(false)
 
   const playRecordingFeedback = useCallback(
     async (blobUrl, blob) => {
       console.log(blob, blobUrl)
       setUrl(blobUrl)
-      setSnackBar(true)
-      setSnackText("Recording stopped!")
       setRecordingStatus("stop")
-      const playRecordedAudio = getPlayRecord(blobUrl);
-      await playRecordedAudio();
+      saveToLocalforage({ verse: "verse1", version: selectedRevision, verseBatchNum: 1, blobUrl: blobUrl })
+      // const playRecordedAudio = getPlayRecord(blobUrl);
+      // await playRecordedAudio();
     },
     []
   );
@@ -54,10 +57,11 @@ export default function CustomPlayer() {
     pauseRecording,
     resumeRecording,
     clearBlobUrl,
+    mediaBlobUrl,
     error,
     status
     } = useReactMediaRecorder({
-        audio: {},
+        audio: true,
         onStop: playRecordingFeedback,
         blobPropertyBag : { type: audioFormat }
     });
@@ -74,7 +78,16 @@ export default function CustomPlayer() {
     return () => wavesurfer.current.microphone.destroy();
   },[])
 
+  useEffect(() => {
+    if(recordingStatus === "stop"){
+      console.log(">>>>stoppppppppp")
+      
+      // saveToLocalforage({ verse: "verse2", version: selectedRevision, verseBatchNum: 1, blobUrl: url })
+    }
+  },[recordingStatus])
+
   const start = () => {
+      setRecordStop(false)
       clearBlobUrl()
       startRecording()
       setRecordingStatus("start")
@@ -97,6 +110,8 @@ export default function CustomPlayer() {
     stopRecording()
     setRecordingStatus('stop')
     wavesurfer.current.microphone.stop();
+    console.log("DSdasadasdasd")
+    setRecordStop(true)
   }
 
   return (
@@ -127,20 +142,52 @@ export default function CustomPlayer() {
                             aria-hidden="true"
                           />
                         </button>
-                        <button type="button" style={{background: '#FF4D4D'}} className="p-2 rounded-md hover:bg-error">
+                        <button 
+                        type="button" 
+                        style={{background: '#FF4D4D'}} 
+                        className="p-2 rounded-md hover:bg-error"
+                        disabled={(recordingStatus === 'stop' || status === 'idle') ? false : true}
+                        type="button"
+                        onClick={start}
+                        >
                           <MicrophoneIcon
                             className="w-5 h-5"
                             aria-hidden="true"
                           />
                         </button>
-                        <button type="button" className="p-2 bg-dark rounded-md hover:bg-primary">
+                        {recordingStatus === 'pause' && (
+                        <button 
+                        type="button" 
+                        className="p-2 bg-dark rounded-md hover:bg-primary"
+                        onClick={resume}
+                        >
                             <PlayIcon
                               className="w-5 h-5"
                               aria-hidden="true"
                             />
                           </button>
-                          <button type="button" className="p-2 bg-dark rounded-md hover:bg-primary">
+                        )}
+                        {(recordingStatus === "start" || recordingStatus === 'idle'|| recordingStatus === 'resume' ||  recordingStatus === 'stop') && (
+                          <button 
+                            type="button" 
+                            disabled={(recordingStatus === 'start' || status === 'recording') ? false : true}
+                            className={`p-2 bg-dark rounded-md hover:bg-primary
+                            ${(recordingStatus === 'stop' || (status !=='recording' || recordingStatus === 'idle'))? '' : 'cursor-not-allowed'} `}
+                            onClick={pause}
+                            >
                             <PauseIcon
+                              className="w-5 h-5"
+                              aria-hidden="true"
+                            />
+                          </button>
+                        )}
+
+                          <button 
+                            type="button" 
+                            className="p-2 bg-dark rounded-md hover:bg-primary"
+                            onClick={stop}
+                            >
+                            <StopIcon
                               className="w-5 h-5"
                               aria-hidden="true"
                             />
@@ -170,20 +217,23 @@ export default function CustomPlayer() {
                           </button>
                             <div style={{width:'30px', height: '0px', marginTop:'18px',left:'97px',top: '1.5px', /* White */ border: '1px solid #FFFFFF', transform: `rotate(${90}deg)`,opacity: 0.5}} />
                                 <div className="flex p-2.5 justify-between items-center"
+                                onClick={() => setSelectedRevision('A')}
                                 style={{ borderRadius:'50%', width:"40px", height: '40px', backgroundColor:"#40C000", left: "8.82%", right: "8.82%", top: "8.82%", bottom: "8.82%", }}>
                                     <span className="flex font-bold">
                                         A
                                     </span>
                                 </div>
                                 <div className="flex p-2.5 justify-between items-center"
-                                style={{ borderRadius:'50%', width:"40px", height: '40px', backgroundColor:"#FFFF", left: "8.82%", right: "8.82%", top: "8.82%", bottom: "8.82%", }}>
-                                <span className="flex font-bold text-dark">
+                                onClick={() => setSelectedRevision('B')}
+                                style={{ borderRadius:'50%', width:"40px", height: '40px', backgroundColor: selectedRevision=== 'B'? "grey" : "#FFFF", left: "8.82%", right: "8.82%", top: "8.82%", bottom: "8.82%", }}>
+                                <span className={`flex font-bold ${selectedRevision === 'B' ? 'text-grey' : 'text-dark' }`}>
                                     B
                                 </span>
                                 </div>
                                 <div className="flex p-2.5 justify-between items-center"
-                                style={{ borderRadius:'50%', width:"40px", height: '40px', backgroundColor:"#FFFF", left: "8.82%", right: "8.82%", top: "8.82%", bottom: "8.82%", }}>
-                                <span className="flex font-bold text-dark">
+                                onClick={() => setSelectedRevision('C')}
+                                style={{ borderRadius:'50%', width:"40px", height: '40px', backgroundColor: selectedRevision=== 'C'? "grey" : "#FFFF", left: "8.82%", right: "8.82%", top: "8.82%", bottom: "8.82%", }}>
+                                <span className={`flex font-bold ${selectedRevision === 'C' ? 'text-grey' : 'text-dark' }`}>
                                     C
                                 </span>
                                 </div>
@@ -207,6 +257,17 @@ export default function CustomPlayer() {
                         <div>
                           {recordingStatus!== 'stop' && (
                             <div id="waveform" ref={waveformRef} />
+                          )}
+                          {url && (
+                            <>
+                            <WaveformPlayer 
+                            src={url} 
+                            setStartTime={setStartTime}
+	                          setEndTime={setEndTime}
+	                          setRemainingTime={setRemainingTime}
+	                          totalDuration={setTotalTime}
+                            />
+                            </>
                           )}
                         </div>
                     </div>

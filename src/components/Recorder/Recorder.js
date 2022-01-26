@@ -46,7 +46,6 @@ const Recorder = () => {
     
     const playRecordingFeedback = useCallback(
         async (blobUrl, blob) => {
-          console.log(blob, blobUrl)
           setUrl(blobUrl)
           setSnackBar(true)
           setSnackText("Recording stopped!")
@@ -65,10 +64,13 @@ const Recorder = () => {
         error,
         status
     } = useReactMediaRecorder({
-        audio: {},
+        audio: true,
         onStop: playRecordingFeedback,
         blobPropertyBag : { type: audioFormat }
     });
+
+    console.log({error,
+      status})
 
     useEffect(() => {
       const options = formWaveSurferOptions(waveformRef.current);
@@ -87,6 +89,7 @@ const Recorder = () => {
         startRecording()
         setRecordingStatus("start")
         wavesurfer.current.microphone.start();
+        console.log("start")
     }
 
     const pause = () => {
@@ -103,6 +106,7 @@ const Recorder = () => {
 
     const stop = () => {
       stopRecording()
+      console.log("stop")
       setRecordingStatus('stop')
       wavesurfer.current.microphone.stop();
     }

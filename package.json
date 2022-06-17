@@ -72,7 +72,7 @@
 		"concurrently": "^5.2.0",
 		"cross-env": "^6.0.3",
 		"css-loader": "^3.2.0",
-		"electron": "^13.1.6",
+		"electron": "^15.5.5",
 		"file-loader": "^4.3.0",
 		"istanbul-lib-coverage": "^2.0.5",
 		"sass": "^1.37.0",

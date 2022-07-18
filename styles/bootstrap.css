@@ -3549,7 +3549,7 @@ input[type='submit'].btn-block {
 	min-height: 1.5rem;
 	padding-left: 1.5rem;
 	-webkit-print-color-adjust: exact;
-	color-adjust: exact;
+	print-color-adjust: exact;
 }
 .custom-control-inline {
 	display: -ms-inline-flexbox;

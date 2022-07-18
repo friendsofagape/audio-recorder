@@ -1,7 +1,7 @@
 @import 'bootstrap.css';
-.playlist-overlay.state-shift {
-	/* background-color: rgba(255, 0, 0, 0.3); */
-}
+/*.playlist-overlay.state-shift {
+	 background-color: rgba(255, 0, 0, 0.3); 
+}*/
 .loader {
 	border-top-color: #3498db;
 	-webkit-animation: spinner 1.5s linear infinite;

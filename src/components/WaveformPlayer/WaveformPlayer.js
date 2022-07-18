@@ -95,7 +95,7 @@ export default function WaveformPlayer({
     // Removes events, elements and disconnects Web Audio nodes.
     // when component unmount
     return () => wavesurfer.current.destroy();
-  }, [src]);
+  }, [setEndTime, setRemainingTime, setStartTime, src, totalDuration, volume]);
   
   const trimRegion = () => {
     // I had to fixed to two decimal if I don't do this not work, I don't know whyyy

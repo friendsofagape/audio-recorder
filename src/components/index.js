@@ -1,6 +1,6 @@
-export * from './AudioEditor';
+// export * from './AudioEditor';
 export * from './WaveformPlayer';
-export * from './BufferManupulation';
+export {default as Trimmer} from './BufferManupulation';
 export * from './Recorder';
 export * from './SnackBar';
 export * from './BufferOptions';

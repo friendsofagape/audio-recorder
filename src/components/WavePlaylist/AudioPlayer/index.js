@@ -36,7 +36,7 @@ const AudioPlayer = props => {
                 <div class="animate-spin ml-5 rounded-full h-20 w-20 border-t-2 border-b-2 border-purple-500"></div>
             }
             {(srcRenderState === 0 && srcRenderState === 0) &&
-                <img title="import files to activate" class="disabled opacity-30" src="src\components\WavePlaylist\AudioPlayer\demo.PNG"></img>
+                <img title="import files to activate" class="disabled opacity-30" alt='' src="src\components\WavePlaylist\AudioPlayer\demo.PNG"></img>
             }
         </div>
     )

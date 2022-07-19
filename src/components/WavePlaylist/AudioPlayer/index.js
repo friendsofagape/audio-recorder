@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PlayerControls from './PlayerControls';
 import PlayerFooter from './PlayerFooter';
 
-// import '../../static/css/playlist.scss';
+import '../../static/css/playlist.scss';
 
 const AudioPlayer = props => {
     const {playlist} = props;

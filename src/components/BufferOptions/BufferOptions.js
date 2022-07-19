@@ -4,7 +4,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import concateTracks from '../../core/concateTracks'
 import Crunker from "crunker"
-// import '../../../styles/globals.css'
+import '../../../styles/globals.css'
 
 const people = [
   {

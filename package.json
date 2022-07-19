@@ -1,7 +1,7 @@
 {
 	"name": "recorder-rcl",
 	"description": "A component for verse recording",
-	"version": "0.1.6",
+	"version": "0.1.8",
 	"private": false,
 	"homepage": "https://github.com/friendsofagape/audio-recorder",
 	"repository": {

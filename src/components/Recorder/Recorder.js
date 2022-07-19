@@ -54,7 +54,7 @@ const Recorder = () => {
           const playRecordedAudio = getPlayRecord(blobUrl);
           await playRecordedAudio();
         },
-        []
+        [setSnackBar, setSnackText]
     );
     const {
         startRecording,

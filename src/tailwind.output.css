@@ -943,6 +943,10 @@ select {
   margin-right: -0.5rem;
 }
 
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .ml-0 {
   margin-left: 0px;
 }
@@ -1019,6 +1023,10 @@ select {
   max-height: 14rem;
 }
 
+.min-h-\[100px\] {
+  min-height: 100px;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1049,6 +1057,12 @@ select {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.w-fit {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 
 .max-w-md {
@@ -1333,6 +1347,11 @@ select {
   background-color: rgb(255 229 229 / var(--tw-bg-opacity));
 }
 
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 229 229 / var(--tw-bg-opacity));
+}
+
 .bg-light {
   --tw-bg-opacity: 1;
   background-color: rgb(228 241 255 / var(--tw-bg-opacity));
@@ -1346,11 +1365,6 @@ select {
 .bg-success {
   --tw-bg-opacity: 1;
   background-color: rgb(50 192 0 / var(--tw-bg-opacity));
-}
-
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 229 229 / var(--tw-bg-opacity));
 }
 
 .p-4 {
@@ -1465,6 +1479,10 @@ select {
   text-align: center;
 }
 
+.text-justify {
+  text-align: justify;
+}
+
 .align-top {
   vertical-align: top;
 }
@@ -1515,6 +1533,10 @@ select {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
 
 .leading-normal {

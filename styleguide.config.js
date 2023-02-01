@@ -112,6 +112,19 @@ let sections = [
 			});
 		}
 	},
+	{
+		name: 'SpeechToText',
+		content: 'src/components/SpeechToText/_readme.md',
+		components: () => {
+			const componentNames = [
+				'SpeechRecognition'
+			];
+			return componentNames.map(componentName => {
+				const filename = upperFirst(camelCase(componentName));
+				return path.resolve(__dirname, `src/components/SpeechToText`, `${filename}.js`)
+			});
+		}
+	},
 	// {
 	// 	name: 'Core',
 	// 	content: 'src/core/README.md',

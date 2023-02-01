@@ -8,3 +8,4 @@ export * from './WavePlaylist';
 export * from './TailwindModal';
 export * from './WaveformPlayer';
 export * from './VerseComponent';
+export * from './SpeechToText';
